@@ -1,0 +1,53 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+
+public class Story extends JFrame {
+    // 分层网格
+    JLayeredPane pane = new JLayeredPane();
+    JLabel label;
+    JPanel panel1 = new JPanel();
+    JButton Land = new JButton("开始冒险");
+    ImageIcon image;
+    public static String path=System.getProperty("user.dir")+"/src/images/";
+    public Story() {
+        image = new ImageIcon(path+"newstory.png");
+        //设置组件透明
+        Land.setOpaque(false);
+        //把背景图片添加到标签里
+        label = new JLabel(image);
+        //把标签设置为和图片等高等宽
+        panel1.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
+        //把我的面板设置为内容面板
+        panel1 = (JPanel) this.getContentPane();
+        //添加标签
+        panel1.add(label);
+        //设置按钮位置大小
+        Land.setBounds(330, 300, 100, 50);
+
+        pane.add(panel1, JLayeredPane.DEFAULT_LAYER);
+        //该层用于模式对话框。按钮将出现在容器中所有工具栏、调色板或标准组件的上面
+        pane.add(Land, JLayeredPane.MODAL_LAYER);
+
+        this.setTitle("故事背景");
+        this.setBounds(100, 100, image.getIconWidth(), image.getIconHeight());
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setLayeredPane(pane);
+        this.setVisible(true);
+        //添加监听器
+        Land.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new MyFrame();
+                setVisible(false);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+    }
+}
