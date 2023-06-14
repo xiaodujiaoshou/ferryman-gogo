@@ -1,0 +1,86 @@
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+public class BackGround {
+    //当前场景所要显示的图像
+    private BufferedImage bgImage=null;
+    //当前为第几个场景
+    private int sort;
+    //判断是否为最后一个场景
+    private boolean flag;
+    //存放所有障碍物的列表
+    private List<Obstacle> obstacleList=new ArrayList<>();
+    //用于存放我们的猫咪敌人---wangjia
+    private List<EnemyCat> enemycatList = new ArrayList<>();
+    //用于存放我们的幽灵敌人---wangjia
+    private List<EnemyGhost> enemyghostList = new ArrayList<>();
+
+    //构造函数
+    public BackGround(){
+
+    }
+
+    public BackGround(int sort,boolean flag){
+        this.sort=sort;
+        this.flag=flag;
+        /*
+        判断是否为最后一个场景
+        若是，当前场景为终点
+        否则为背景
+         */
+        if (flag){
+            bgImage=StaticValue.end;
+        }
+        else {
+            bgImage=StaticValue.bg;
+        }
+        //绘制猫咪敌人
+        enemycatList.add(new EnemyCat(120, 330, true, 1, 100, 130, this));
+        enemycatList.add(new EnemyCat(540, 330, true, 1, 510, 560, this));
+        enemycatList.add(new EnemyCat(680, 330, true, 1, 660, 730, this));
+        //绘制幽灵敌人
+        enemyghostList.add(new EnemyGhost(320, 330, true, 2, 306, 326, this));
+        enemyghostList.add(new EnemyGhost(660, 200, true, 2, 630, 710, this));
+        if(sort==1){
+            //添加透明地面将其实物化,透明块type=0，障碍物石块type=1
+            for(int i=0;i<12;i++){
+                obstacleList.add(new Obstacle(i*70,380,0,this));
+            }
+            //绘制障碍物石块
+            obstacleList.add(new Obstacle(560,260,1,this));
+            obstacleList.add(new Obstacle(490,260,1,this));
+            obstacleList.add(new Obstacle(360,260,1,this));
+            obstacleList.add(new Obstacle(240,260,1,this));
+            obstacleList.add(new Obstacle(180,320,1,this));
+        }
+    }
+
+    public BufferedImage getBgImage() {
+        return bgImage;
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+
+
+
+    public List<Obstacle> getObstacleList() {
+        return obstacleList;
+    }
+
+
+    public List<EnemyCat> getEnemycatList() {
+        return enemycatList;
+    }
+
+    public List<EnemyGhost> getEnemyghostList() {
+        return enemyghostList;
+    }
+
+}
