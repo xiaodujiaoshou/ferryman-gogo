@@ -1,0 +1,77 @@
+import java.awt.image.BufferedImage;
+public class EnemyGhost implements Runnable {
+    //存储当前坐标
+    private int x, y;
+    //存储敌人类型
+    private int type;
+    //判断敌人运动的方向
+    private boolean face_to = true;
+    //用于显示敌人的当前图像
+    private BufferedImage show;
+    //定义一个背景对象
+    private BackGround bg;
+    //幽灵敌人运动的极限范围
+    private int max_up = 0;
+    private int max_down = 0;
+    //定义线程对象，实现敌人的运动
+    private Thread thread = new Thread(this);
+    //定义当前的图片的状态
+    private int image_type = 0;
+
+    //幽灵敌人的构造函数
+    public EnemyGhost(int x, int y, boolean face_to, int type, int max_up, int max_down, BackGround bg) {
+        this.x = x;
+        this.y = y;
+        this.face_to = face_to;
+        this.type = type;
+        this.max_up = max_up;
+        this.max_down = max_down;
+        this.bg = bg;
+        show = StaticValue.ghost.get(0);
+        thread.start();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public BufferedImage getShow() {
+        return show;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            //判断是否是幽灵敌人
+            if (type == 2) {
+                if (face_to) {
+                    this.x -= 2;
+                } else {
+                    this.x += 2;
+                }
+
+                image_type = image_type == 1 ? 0 : 1;
+
+                //幽灵敌人是否到达极限位置
+                if (face_to && (this.x == max_up)) {
+                    face_to = false;
+                }
+                if ((!face_to) && (this.x == max_down)) {
+                    face_to = true;
+                }
+
+                show = StaticValue.ghost.get(image_type);
+            }
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+
