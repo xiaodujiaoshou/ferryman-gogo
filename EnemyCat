@@ -1,0 +1,165 @@
+import java.awt.image.BufferedImage;
+public class EnemyCat implements Runnable{
+    //存储当前坐标
+    private int x, y;
+    //存储敌人类型
+    private int type;
+    //判断敌人运动的方向
+    private boolean face_to = true;
+    //用于显示敌人的当前图像
+    private BufferedImage show;
+    //定义一个背景对象
+    private BackGround bg;
+    //猫咪敌人运动的极限范围
+    private int max_left = 0;
+    private int max_right = 0;
+    //定义线程对象，实现敌人的运动
+    private Thread thread = new Thread(this);
+
+    //猫咪敌人的构造函数
+    public EnemyCat(int x, int y, boolean face_to, int type, int max_left, int max_right, BackGround bg) {
+        this.x = x;
+        this.y = y;
+        this.face_to = face_to;
+        this.type = type;
+        this.max_left = max_left;
+        this.max_right = max_right;
+        this.bg = bg;
+        show = StaticValue.cat.get(0);
+        thread.start();
+    }
+
+    //死亡方法
+    public void death() {
+        show = null;
+        this.bg.getEnemycatList().remove(this);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public BufferedImage getShow() {
+        return show;
+    }
+
+
+    public int getType() { return type; }
+
+    @Override
+    public void run() {
+        while (true) {
+            //判断是否是猫咪敌人
+            if (type == 1) {
+                if (face_to) {
+                    this.x -= 2;
+                    show = StaticValue.cat.get(1);
+                } else {
+                    this.x += 2;
+                    show = StaticValue.cat.get(0);
+                }
+
+                //猫咪敌人是否到达极限位置
+                if (face_to && (this.x == max_left)) {
+                    face_to = false;
+                }
+                if ((!face_to) && (this.x == max_right)) {
+                    face_to = true;
+                }
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }
+    }
+}import java.awt.image.BufferedImage;
+public class EnemyCat implements Runnable{
+    //存储当前坐标
+    private int x, y;
+    //存储敌人类型
+    private int type;
+    //判断敌人运动的方向
+    private boolean face_to = true;
+    //用于显示敌人的当前图像
+    private BufferedImage show;
+    //定义一个背景对象
+    private BackGround bg;
+    //猫咪敌人运动的极限范围
+    private int max_left = 0;
+    private int max_right = 0;
+    //定义线程对象，实现敌人的运动
+    private Thread thread = new Thread(this);
+
+    //猫咪敌人的构造函数
+    public EnemyCat(int x, int y, boolean face_to, int type, int max_left, int max_right, BackGround bg) {
+        this.x = x;
+        this.y = y;
+        this.face_to = face_to;
+        this.type = type;
+        this.max_left = max_left;
+        this.max_right = max_right;
+        this.bg = bg;
+        show = StaticValue.cat.get(0);
+        thread.start();
+    }
+
+    //死亡方法
+    public void death() {
+        show = null;
+        this.bg.getEnemycatList().remove(this);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public BufferedImage getShow() {
+        return show;
+    }
+
+
+    public int getType() { return type; }
+
+    @Override
+    public void run() {
+        while (true) {
+            //判断是否是猫咪敌人
+            if (type == 1) {
+                if (face_to) {
+                    this.x -= 2;
+                    show = StaticValue.cat.get(1);
+                } else {
+                    this.x += 2;
+                    show = StaticValue.cat.get(0);
+                }
+
+                //猫咪敌人是否到达极限位置
+                if (face_to && (this.x == max_left)) {
+                    face_to = false;
+                }
+                if ((!face_to) && (this.x == max_right)) {
+                    face_to = true;
+                }
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }
+    }
+}
