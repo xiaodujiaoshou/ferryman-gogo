@@ -1,0 +1,104 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StaticValue {
+    //背景
+    public static BufferedImage bg=null;
+    //摆渡人向左跳跃
+    public static BufferedImage jump_L=null;
+    //摆渡人向右跳跃
+    public static BufferedImage jump_R=null;
+    //摆渡人向左站立
+    public static BufferedImage stand_L=null;
+    //摆渡人向右站立
+    public static BufferedImage stand_R=null;
+    //终点
+    public static BufferedImage end=null;
+    //障碍物
+    public static List<BufferedImage> obstacle=new ArrayList<>();
+    //摆渡车向左开
+    public static List<BufferedImage> run_L=new ArrayList<>();
+    //摆渡车向右开
+    public static List<BufferedImage> run_R=new ArrayList<>();
+    //幽灵敌人
+    public static List<BufferedImage> ghost=new ArrayList<>();
+    //猫咪敌人
+    public static List<BufferedImage> cat=new ArrayList<>();
+    //能量星星积分
+    public static List<BufferedImage> star=new ArrayList<>();
+    //能量爱心生命
+    public static List<BufferedImage> heart=new ArrayList<>();
+    //路径的前缀，方便后续调用
+    public static String path=System.getProperty("user.dir")+"/src/images/";
+
+    //初始化方法
+    public static void init() {
+
+        try {
+            //加载背景图片
+            bg= ImageIO.read(new File(path+"背景.png"));
+            //加载向左站立
+            stand_L=ImageIO.read(new File(path+"左红1.png"));
+            //加载向右站立
+            stand_R=ImageIO.read(new File(path+"右红1.png"));
+            //加载终点
+            end=ImageIO.read(new File(path+"终点.png"));
+            //加载向左跳跃
+            jump_L=ImageIO.read(new File(path+"左红1.png"));
+            //加载向右跳跃
+            jump_R=ImageIO.read(new File(path+"右红1.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //加载向左跑(红）
+        for(int i=1;i<=2;i++){
+            try {
+                run_L.add(ImageIO.read(new File(path + "左红" + i + ".png")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+        //加载向右跑(红）
+        for(int i=1;i<=2;i++){
+            try {
+                run_R.add(ImageIO.read(new File(path + "右红" + i + ".png")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
+        //加载障碍物
+        try {
+            obstacle.add(ImageIO.read(new File(path + "透明块.png")));
+            obstacle.add(ImageIO.read(new File(path + "障碍物石块.PNG")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //加载幽灵敌人
+        for (int i = 1;i <= 2;i++) {
+            try {
+                ghost.add(ImageIO.read(new File(path + "ghost" + i + ".png")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        //加载猫咪敌人
+        for (int i = 1;i <= 2;i++) {
+            try {
+                cat.add(ImageIO.read(new File(path + "cat" + i + ".png")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+}
